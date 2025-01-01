@@ -1,5 +1,6 @@
 import os
 import asyncio
+import humanize
 from pyrogram import Client, filters
 from pyrogram.enums import ParseMode
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
@@ -10,6 +11,10 @@ from config import *
 from helper_func import subscribed, encode, decode, get_messages
 from database.database import add_user, del_user, full_userbase, present_user
 
+
+titanxofficials = FILE_AUTO_DELETE
+titandeveloper = titanxofficials
+file_auto_delete = humanize.naturaldelta(titandeveloper)
 
 @Bot.on_message(filters.command('start') & filters.private & subscribed)
 async def start_command(client: Client, message: Message):
@@ -56,6 +61,8 @@ async def start_command(client: Client, message: Message):
             return
         await temp_msg.delete()
 
+        titanx_msgs = [] # List to keep track of sent message 
+
         for msg in messages:
 
             if bool(CUSTOM_CAPTION) & bool(msg.document):
@@ -69,13 +76,22 @@ async def start_command(client: Client, message: Message):
                 reply_markup = None
 
             try:
-                await msg.copy(chat_id=message.from_user.id, caption = caption, parse_mode = ParseMode.HTML, reply_markup = reply_markup, protect_content=PROTECT_CONTENT)
-                await asyncio.sleep(1)
+                titanx_msg = await msg.copy(chat_id=message.from_user.id, caption = caption, parse_mode = ParseMode.HTML, reply_markup = reply_markup, protect_content=PROTECT_CONTENT)
+                titanx_msgs.append(titanx_msg)
+                
             except FloodWait as e:
-                await asyncio.sleep(e.x)
-                await msg.copy(chat_id=message.from_user.id, caption = caption, parse_mode = ParseMode.HTML, reply_markup = reply_markup, protect_content=PROTECT_CONTENT)
-            except:
+                await asyncio.sleep(e.value)
+                titanx_msg = await msg.copy(chat_id=message.from_user.id, caption = caption, parse_mode = ParseMode.HTML, reply_markup = reply_markup, protect_content=PROTECT_CONTENT)
+                titanx_msgs.append(titanx_msg)
+            except Exception as e:
+                print(f"Error coping message: {e}")
                 pass
+
+        k = await client.send_message(chat_id=message.from_user.id, text=f"<b>❗️ <u>IMPORTANT</u> ❗️</b>\n\nThis Video / File Will Be Deleted In {file_auto_delete} (Due To Copyright Issues).\n\n📌 Please Forward This Video / File To Somewhere Else And Start Downloading There.")
+
+        # Schedule the file deletion
+        asyncio.create_task(delete_files(titanx_msgs, client, k))
+        
         return
     else:
         reply_markup = InlineKeyboardMarkup(
@@ -198,6 +214,38 @@ Unsuccessful: <code>{unsuccessful}</code></b>"""
         msg = await message.reply(REPLY_ERROR)
         await asyncio.sleep(8)
         await msg.delete()
+
+
+
+async def delete_files(messages, client, k):
+    await asyncio.sleep(FILE_AUTO_DELETE)  # Wait for the duration specified in config.py
+    for msg in messages:
+        try:
+            await client.delete_messages(chat_id=msg.chat.id, message_ids=[msg.id])
+        except Exception as e:
+            print(f"The attempt to delete the media {msg.id} was unsuccessful: {e}")
+
+        # Safeguard against k.command being None or having insufficient parts
+    command_part = k.command[1] if k.command and len(k.command) > 1 else None
+
+    if command_part:
+        button_url = f"https://t.me/{client.username}?start={command_part}"
+        keyboard = InlineKeyboardMarkup(
+            [
+                [InlineKeyboardButton("ɢᴇᴛ ғɪʟᴇ ᴀɢᴀɪɴ!", url=button_url)]
+            ]
+        )
+    else:
+        keyboard = None
+
+    # Edit message with the button
+        try:
+            await k.edit_text("Your Video / File Is Successfully Deleted ✅", reply_markup=keyboard)
+        except Exception as e:
+              logging.error(f"Error editing the message: {e}")
+        except Exception as e:
+              logging.error(f"An unexpected error occurred: {e}")
+            
 
 # Dont Remove Credit
 # Update Channel - TitanXBots
