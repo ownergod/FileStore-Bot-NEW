@@ -29,7 +29,7 @@ OWNER_ID = int(os.environ.get("OWNER_ID", ""))
 PORT = os.environ.get("PORT", "8080")
 
 #File Auto Delete
-FILE_AUTO_DELETE = int(os.environ.get("FILE_AUTO_DELETE", "60")) # auto delete in seconds
+FILE_AUTO_DELETE = int(os.environ.get("FILE_AUTO_DELETE", "45")) # auto delete in seconds
 
 
 #Database 
