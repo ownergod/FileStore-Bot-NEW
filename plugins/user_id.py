@@ -21,8 +21,8 @@ async def showid(client, message):
 
 
 
-# Jishu Developer 
+# Titan Developer - Yash
 # Don't Remove Credit 🥺
-# Telegram Channel @Madflix_Bots
-# Backup Channel @JishuBotz
-# Developer @JishuDeveloper
+# Telegram Channel @TitanXBots
+# Support Group @
+# Developer/Dev @TitanOwner
