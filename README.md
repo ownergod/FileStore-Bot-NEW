@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://graph.org/file/46fb0f3996a85e72e3df7-21b949dd843137e9d9.jpg" alt="FileStore Logo">
+  <img src="https://graph.org/file/46fb0f3996a85e72e3df7-21b949dd843137e9d9.jpg">
 </p>
 <h1 align="center">
   𝑻𝑰𝑻𝑨𝑵-𝑭𝑰𝑳𝑬𝑺𝑻𝑶𝑹𝑬
