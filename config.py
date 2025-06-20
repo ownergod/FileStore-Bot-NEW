@@ -37,10 +37,10 @@ DB_URI = os.environ.get("DATABASE_URL", "mongodb+srv://gxmon239:f4l7bKrhka3Fh2cV
 DB_NAME = os.environ.get("DATABASE_NAME", "Titanxbot") # Don't Change Database Name
 
 #force sub channel id, if you want to enable force sub (Use different ForceSub Channel ID)
-FORCE_SUB_CHANNEL_1 = int(os.environ.get("FORCE_SUB_CHANNEL_1", ""))
-FORCE_SUB_CHANNEL_2 = int(os.environ.get("FORCE_SUB_CHANNEL_2", ""))
-FORCE_SUB_CHANNEL_3 = int(os.environ.get("FORCE_SUB_CHANNEL_3", ""))
-FORCE_SUB_CHANNEL_4 = int(os.environ.get("FORCE_SUB_CHANNEL_4", ""))
+FORCE_SUB_CHANNEL_1 = int(os.environ.get("FORCE_SUB_CHANNEL_1", "-1002471250775"))
+FORCE_SUB_CHANNEL_2 = int(os.environ.get("FORCE_SUB_CHANNEL_2", "-1002471250775"))
+FORCE_SUB_CHANNEL_3 = int(os.environ.get("FORCE_SUB_CHANNEL_3", "-1002471250775"))
+FORCE_SUB_CHANNEL_4 = int(os.environ.get("FORCE_SUB_CHANNEL_4", "-1002471250775"))
 
 
 TG_BOT_WORKERS = int(os.environ.get("TG_BOT_WORKERS", "4"))
